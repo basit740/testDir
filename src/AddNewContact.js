@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import './styles/AddNewContact.css';
+
+import contactReducer, {
+	ACTIONS,
+	newContact,
+} from './reducers/contact-reducer';
+
 export default function AddNewContact({ onNewContact }) {
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [email, setEmail] = useState('');
-	const [phone, setPhone] = useState('');
-	const [number, setNumber] = useState('');
-	const [city, setCity] = useState('');
+	const [state, dispatch] = useReducer(contactReducer, newContact);
 
 	const submitHandler = (event) => {
 		event.preventDefault();
 
 		const newContact = {
-			firstName,
-			lastName,
-			email,
-			number,
-			city,
+			firstName: state.firstName,
+			lastName: state.lastName,
+			email: state.email,
+			number: state.number,
+			city: state.city,
 		};
 
 		onNewContact(newContact);
@@ -30,7 +31,12 @@ export default function AddNewContact({ onNewContact }) {
 					<input
 						type='text'
 						placeholder='first Name...'
-						onChange={(event) => setFirstName(event.target.value)}
+						onChange={(event) => {
+							dispatch({
+								type: ACTIONS.SET_F_NAME,
+								payload: { value: event.target.value },
+							});
+						}}
 					/>
 				</div>
 				<div className='input-control'>
@@ -38,7 +44,12 @@ export default function AddNewContact({ onNewContact }) {
 					<input
 						type='text'
 						placeholder='Last Name'
-						onChange={(event) => setLastName(event.target.value)}
+						onChange={(event) => {
+							dispatch({
+								type: ACTIONS.SET_L_NAME,
+								payload: { value: event.target.value },
+							});
+						}}
 					/>
 				</div>
 
@@ -47,7 +58,12 @@ export default function AddNewContact({ onNewContact }) {
 					<input
 						type='text'
 						placeholder='Email'
-						onChange={(event) => setEmail(event.target.value)}
+						onChange={(event) => {
+							dispatch({
+								type: ACTIONS.SET_EMAIL,
+								payload: { value: event.target.value },
+							});
+						}}
 					/>
 				</div>
 
@@ -56,7 +72,12 @@ export default function AddNewContact({ onNewContact }) {
 					<input
 						type='text'
 						placeholder='Phone Number'
-						onChange={(event) => setNumber(event.target.value)}
+						onChange={(event) => {
+							dispatch({
+								type: ACTIONS.SET_NUMBER,
+								payload: { value: event.target.value },
+							});
+						}}
 					/>
 				</div>
 
@@ -65,7 +86,12 @@ export default function AddNewContact({ onNewContact }) {
 					<input
 						type='text'
 						placeholder='City'
-						onChange={(event) => setCity(event.target.value)}
+						onChange={(event) => {
+							dispatch({
+								type: ACTIONS.SET_CITY,
+								payload: { value: event.target.value },
+							});
+						}}
 					/>
 				</div>
 
